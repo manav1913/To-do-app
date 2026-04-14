@@ -2,10 +2,14 @@ const inputEl = document.getElementById("todo")
 const addEl = document.getElementById("add")
 const txtEl = document.getElementById("txt")
 
+
+
 let todoList = []
 
 
 addEl.addEventListener("click", add)
+
+
 
 
 function add(){
@@ -17,8 +21,24 @@ function add(){
 
     todoList.push(input)
 
-    for(let i=0; i<todoList.length; i++){
-        txtEl.innerHTML += `<p>${todoList[i]}</p>`
-    }
     inputEl.value = ""
+    render()
 }
+
+function render(){
+        
+        txtEl.innerHTML = ""
+
+        for(let i=0; i<todoList.length; i++){
+        txtEl.innerHTML += `<p>
+         ${todoList[i]} 
+         <button onclick="
+         todoList.splice(${i}, 1)
+         render()
+         ">
+            Delete
+         </button>
+         </p>`
+    }
+}
+
