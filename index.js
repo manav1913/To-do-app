@@ -4,7 +4,7 @@ const txtEl = document.getElementById("txt")
 
 
 
-let todoList = []
+let todoList = JSON.parse(localStorage.getItem("list")) || []
 
 
 addEl.addEventListener("click", add)
@@ -17,9 +17,12 @@ function add(){
 
     if(input === "") return
 
-    txtEl.innerHTML = ""
+    todoList.push({
+        text: input,
+        date: new Date().toLocaleDateString()
+    })
 
-    todoList.push(input)
+    localStorage.setItem("list", JSON.stringify(todoList))
 
     inputEl.value = ""
     render()
@@ -31,7 +34,10 @@ function render(){
 
         for(let i=0; i<todoList.length; i++){
         txtEl.innerHTML += `<p>
-         ${todoList[i]} 
+        <span>
+         ${todoList[i].text} 
+         <small>${todoList[i].date}</small>
+         </span>
          <button onclick="
          todoList.splice(${i}, 1)
          render()
@@ -41,4 +47,4 @@ function render(){
          </p>`
     }
 }
-
+render()
